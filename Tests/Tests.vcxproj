@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="15.0">
+  <!-- Fallback so SolutionDir is defined when building the vcxproj standalone -->
+  <PropertyGroup>
+    <SolutionDir Condition="'$(SolutionDir)'=='' or '$(SolutionDir)'=='*Undefined*'">$(MSBuildThisFileDirectory)..\</SolutionDir>
+  </PropertyGroup>
+  <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.250303.1\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.250303.1\build\native\Microsoft.Windows.CppWinRT.props')" />
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}</ProjectGuid>
+    <RootNamespace>Tests</RootNamespace>
+    <ProjectName>Tests</ProjectName>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.17763.0</WindowsTargetPlatformMinVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' &gt;= '18.0'">v145</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' &lt; '18.0'">v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup>
+    <GTestPkgDir>$(SolutionDir)packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1.8\</GTestPkgDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
+      <WarningLevel>Level3</WarningLevel>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)ClinicalSummarisation;$(SolutionDir)External\OpenVINO\runtime\include;$(SolutionDir)External\hnswlib;$(SolutionDir)External\sqlite-amalgamation-3460100;$(GTestPkgDir)build\native\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_DEBUG;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(GTestPkgDir)lib\native\v140\windesktop\msvcstl\static\rt-dyn\x64\Debug;$(SolutionDir)External\OpenVINO\runtime\lib\intel64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>gtest.lib;openvino.lib;openvino_genai.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>if exist "$(SolutionDir)External\OpenVINO\runtime\bin\intel64\$(Configuration)\openvino.dll" copy /Y "$(SolutionDir)External\OpenVINO\runtime\bin\intel64\$(Configuration)\openvino.dll" "$(OutDir)" &amp; if exist "$(SolutionDir)External\OpenVINO\runtime\bin\intel64\$(Configuration)\openvino_genai.dll" copy /Y "$(SolutionDir)External\OpenVINO\runtime\bin\intel64\$(Configuration)\openvino_genai.dll" "$(OutDir)" &amp; if exist "$(SolutionDir)External\OpenVINO\runtime\3rdparty\tbb\bin\tbb12.dll" copy /Y "$(SolutionDir)External\OpenVINO\runtime\3rdparty\tbb\bin\tbb12.dll" "$(OutDir)"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>NDEBUG;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(GTestPkgDir)lib\native\v140\windesktop\msvcstl\static\rt-dyn\x64\Release;$(SolutionDir)External\OpenVINO\runtime\lib\intel64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>gtest.lib;openvino.lib;openvino_genai.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>if exist "$(SolutionDir)External\OpenVINO\runtime\bin\intel64\$(Configuration)\openvino.dll" copy /Y "$(SolutionDir)External\OpenVINO\runtime\bin\intel64\$(Configuration)\openvino.dll" "$(OutDir)" &amp; if exist "$(SolutionDir)External\OpenVINO\runtime\bin\intel64\$(Configuration)\openvino_genai.dll" copy /Y "$(SolutionDir)External\OpenVINO\runtime\bin\intel64\$(Configuration)\openvino_genai.dll" "$(OutDir)" &amp; if exist "$(SolutionDir)External\OpenVINO\runtime\3rdparty\tbb\bin\tbb12.dll" copy /Y "$(SolutionDir)External\OpenVINO\runtime\3rdparty\tbb\bin\tbb12.dll" "$(OutDir)"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <!-- Source files -->
+  <ItemGroup>
+    <ClCompile Include="..\ClinicalSummarisation\AudioRecorder.cpp" />
+    <ClCompile Include="..\ClinicalSummarisation\DoctorEmbedding.cpp" />
+    <ClCompile Include="..\ClinicalSummarisation\GuidelineRAG.cpp" />
+    <ClCompile Include="..\ClinicalSummarisation\sqlite3_impl.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\ClinicalSummarisation\SummarisationEngine.cpp" />
+    <ClCompile Include="..\ClinicalSummarisation\TranscriptionEngine.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="BackendTests.cpp" />
+    <!-- Backend sources compiled directly (no XAML dependency) -->
+    <ClCompile Include="..\ClinicalSummarisation\AudioTranscriptionBridge.cpp" />
+    <ClCompile Include="..\ClinicalSummarisation\SpeakerEncoder.cpp" />
+    <ClCompile Include="..\ClinicalSummarisation\Helpers.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="TestSupport\BackendTestFakes.h" />
+    <ClInclude Include="Unit\AudioRecorderTests.h" />
+    <ClInclude Include="Unit\AudioTranscriptionBridgeTests.h" />
+    <ClInclude Include="Unit\AudioUtilsAndCosineTests.h" />
+    <ClInclude Include="Unit\DoctorEmbeddingTests.h" />
+    <ClInclude Include="Unit\GuidelineRagTests.h" />
+    <ClInclude Include="Unit\HelpersAndStructuresTests.h" />
+    <ClInclude Include="Unit\SpeakerEncoderTests.h" />
+    <ClInclude Include="Unit\SummarisationEngineTests.h" />
+    <ClInclude Include="Unit\TranscriptionEngineTests.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1.8\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets" Condition="Exists('..\packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1.8\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets')" />
+    <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.250303.1\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.250303.1\build\native\Microsoft.Windows.CppWinRT.targets')" />
+  </ImportGroup>
+</Project>

@@ -1,0 +1,12 @@
+namespace ClinicalSummarisation
+{
+    [default_interface]
+    runtimeclass MainWindow : Microsoft.UI.Xaml.Window
+    {
+        MainWindow();
+		void startRecording_Click(Object sender, Microsoft.UI.Xaml.RoutedEventArgs args);
+		void stopRecording_Click(Object sender, Microsoft.UI.Xaml.RoutedEventArgs args);
+		void viewGuidance_Click(Object sender, Microsoft.UI.Xaml.RoutedEventArgs args);
+		void closeGuidance_Click(Object sender, Microsoft.UI.Xaml.RoutedEventArgs args);
+    }
+}
