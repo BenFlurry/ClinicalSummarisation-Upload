@@ -1,6 +1,3 @@
-\chapter{System Manual}
-\label{app:system_manual}
-\section{Environment}
 To download the application for development, use the google drive link (https://drive.google.com/drive/folders/1JC9XgGBI3Qqxcb2GDNXPdSDnTLGo2X7P?usp=sharing) and unzip the folder. This application must be developed on Microsoft Visual Studio 2026 edition due to the MSIX sandbox environment. The root folder contains 4 main folders. The External folder holds all library \texttt{.lib}, \texttt{.bin} and \texttt{.dll} files. The ClinicalSummarisation folder holds all written code and Clinical Summarisation (Package) holds all packaged models. Finally, the Tests folder holds all unit test code. 
 
 To open the development environment, double click the \texttt{ClinicalSummarisation.slnx} file. To run the program, right click on the top file in the solution explorer and select deploy. To run the tests for the program, click on the view button at the very top of the page and select Test Viewer. Press the green play symbol to run the tests. 
