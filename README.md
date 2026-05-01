@@ -11,6 +11,7 @@ Models:
 -   MedCPT: https://huggingface.co/ncbi/MedCPT-Query-Encoder
 
 Libraries: 
+-   OpenVINO: https://docs.openvino.ai/2026/get-started/install-openvino.html?
 -   MuPDF: https://mupdf.com/
 -   HNSWLib: https://github.com/nmslib/hnswlib
 -   MiniAudio: https://github.com/mackron/miniaudio
